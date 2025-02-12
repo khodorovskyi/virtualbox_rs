@@ -1,0 +1,28 @@
+[package]
+name = "virtualbox_rs"
+version = "0.3.0"
+edition = "2021"
+authors = ["Mykola Khodorovskyi <mykola@khodorovskyi.eu>"]
+license = "BSD-3-Clause"
+description = "A Rust library for interacting with VirtualBox, providing a safe and idiomatic interface to the VirtualBox API."
+keywords = ["VirtualBox", "VMI", "vbox"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+v7_1 = ["vbox_raw/v7_1"]
+v7_0 = ["vbox_raw/v7_0"]
+v6_1 = ["vbox_raw/v6_1"]
+
+[dependencies]
+log = "0.4.22"
+vbox_raw = {version = "0.3.1", optional = false }
+#vbox_raw = {path = "../vbox_raw", version = "0.3.0", optional = false, features = ["v7_1"] }
+
+[dev-dependencies]
+env_logger = "0.11.3"
+chrono = "0.4.38"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

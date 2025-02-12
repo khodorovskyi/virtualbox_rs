@@ -1,0 +1,51 @@
+name: Build and test v7_0 on win
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+       # The Windows runners have autocrlf enabled by default
+        # which causes failures for some of rustfmt's line-ending sensitive tests
+      - name: disable git  eol translation
+        run: git config --global core.autocrlf false
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo
+            ./target
+            ./vbox_raw
+          key: v7_win
+          continue-on-error: true
+
+      # Run build
+      - name: Install Rustup using win.rustup.rs
+        run: |
+          # Disable the download progress bar which can cause perf issues
+          $ProgressPreference = "SilentlyContinue"
+          Invoke-WebRequest https://win.rustup.rs/ -OutFile rustup-init.exe
+          .\rustup-init.exe -y --default-host=x86_64-pc-windows-msvc --default-toolchain=none
+          del rustup-init.exe
+          rustup target add x86_64-pc-windows-msvc
+        shell: powershell
+
+#      - name: Build vbox_raw
+#        shell: cmd
+#        run: |
+#          cd vbox_raw && cargo build
+      - name: Build the application
+        shell: cmd
+        run: |
+          cargo build
+      - name: Test the application
+        shell: cmd
+        run: |
+          cargo test

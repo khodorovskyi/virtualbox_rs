@@ -1,0 +1,37 @@
+name: Build and test v7_1
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo
+            ./target
+            ./vbox_raw/target
+          key: v7_1
+
+      - name: Build the application
+        run: |
+          cargo build  --release 
+
+      - name: Test the application
+        run: |
+          cargo test
+      - name: Test doc
+        run: |
+          cargo doc

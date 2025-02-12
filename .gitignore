@@ -1,0 +1,9 @@
+/target
+/Cargo.lock
+/sdk/
+/syslib/
+/vbox_raw/.idea/
+/vbox_raw/c_lib/
+/vbox_raw/target/
+/vbox_raw/Cargo.lock
+/.idea
