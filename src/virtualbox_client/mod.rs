@@ -18,8 +18,54 @@ pub struct VirtualBoxClient {
 }
 
 impl VirtualBoxClient {
+    /// Initializes the VirtualBox client.
+    ///
+    /// # Returns
+    ///
+    /// Returns [`VirtualBoxClient`] on success, or a [`VboxError`] on failure.
+    ///
+    ///  # Example
+    ///
+    /// ```no_run
+    /// use virtualbox_rs::VirtualBoxClient;
+    ///
+    /// let client = VirtualBoxClient::init().unwrap();
+    /// ```
+    ///
+    /// # Details
+    ///
+    /// This method checks the VirtualBox version before initializing the client.
+    /// It ensures compatibility and prevents potential issues due to version mismatches.
+    /// Use this method if you have not checked the version beforehand.
+
     pub fn init() -> Result<Self, VboxError> {
+        Self::check_version()?;
+        Self::init_unchecked()
+    }
+
+    /// Initializes the VirtualBox client without checking the version.
+    ///
+    /// # Returns
+    ///
+    /// Returns [`VirtualBoxClient`] on success, or a [`VboxError`] on failure.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// use virtualbox_rs::VirtualBoxClient;
+    ///
+    /// let client = VirtualBoxClient::init_unchecked().unwrap();
+    /// ```
+    ///
+    /// # Details
+    ///
+    /// This method skips the version check and directly initializes the client.
+    /// Use this method only if you have already checked the version and are confident it is correct.
+    /// If the version is not checked and does not match, the application may crash with a core dump on random method calls.
+    /// The speed of calling `init_unchecked` is minimally different from the regular `init`.
+    pub fn init_unchecked() -> Result<Self, VboxError> {
         debug!("get_vboxclient");
+        Self::check_version()?;
         let api = g_pVBoxFuncs()?;
         let mut virtualbox_client_ptr: *mut IVirtualBoxClient = std::ptr::null_mut();
 

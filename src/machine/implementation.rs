@@ -6137,7 +6137,7 @@ impl Machine {
     /// println!("{:?}", boot_type);
     ///
     pub fn get_boot_order_array(&self) -> Result<Vec<DeviceType>, VboxError> {
-        let system_properties = SystemProperties::init()?;
+        let system_properties = SystemProperties::init_unchecked()?;
         let boot_count = system_properties.get_max_boot_position()?;
         let mut boot_vec = Vec::new();
         for i in 1..boot_count {
