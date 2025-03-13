@@ -144,7 +144,7 @@ impl VirtualBoxClient {
         }
 
         if raw_ver == "v7_0".to_string()
-            && (current_major != 7 || current_minor != 1 || BUILD_VER != 70)
+            && (current_major != 7 || current_minor != 0 || BUILD_VER != 70)
         {
             return error;
         }
