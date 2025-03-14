@@ -3,10 +3,9 @@ name: Build and test v7_0
 on:
   push:
     branches:
-      - '*'
+      - 'main'
   pull_request:
-    branches:
-      - '*'
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
