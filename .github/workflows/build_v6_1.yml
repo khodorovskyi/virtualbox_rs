@@ -3,10 +3,10 @@ name: Build and test v6_1
 on:
   push:
     branches:
-      - '*'
+      - 'main'
   pull_request:
-    branches:
-      - '*'
+    types: [opened, synchronize, reopened]
+
 jobs:
   build:
     runs-on: ubuntu-latest
