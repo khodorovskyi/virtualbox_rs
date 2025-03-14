@@ -65,7 +65,6 @@ impl VirtualBoxClient {
     /// The speed of calling `init_unchecked` is minimally different from the regular `init`.
     pub fn init_unchecked() -> Result<Self, VboxError> {
         debug!("get_vboxclient");
-        Self::check_version()?;
         let api = g_pVBoxFuncs()?;
         let mut virtualbox_client_ptr: *mut IVirtualBoxClient = std::ptr::null_mut();
 
