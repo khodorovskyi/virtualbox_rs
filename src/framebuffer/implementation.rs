@@ -24,7 +24,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let width = framebuffer.get_width().unwrap();
     pub fn get_width(&self) -> Result<u32, VboxError> {
         get_function_result_number!(self.object, GetWidth, u32)
@@ -51,7 +51,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let height = framebuffer.get_height().unwrap();
     pub fn get_height(&self) -> Result<u32, VboxError> {
         get_function_result_number!(self.object, GetHeight, u32)
@@ -78,7 +78,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let bits_per_pixel = framebuffer.get_bits_per_pixel().unwrap();
     pub fn get_bits_per_pixel(&self) -> Result<u32, VboxError> {
         get_function_result_number!(self.object, GetBitsPerPixel, u32)
@@ -105,7 +105,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let bytes_per_line = framebuffer.get_bytes_per_line().unwrap();
     pub fn get_bytes_per_line(&self) -> Result<u32, VboxError> {
         get_function_result_number!(self.object, GetBytesPerLine, u32)
@@ -132,7 +132,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let pixel_format = framebuffer.get_pixel_format().unwrap();
     pub fn get_pixel_format(&self) -> Result<BitmapFormat, VboxError> {
         let pixel_format = get_function_result_number!(self.object, GetPixelFormat, u32)?;
@@ -162,7 +162,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let height_reduction = framebuffer.get_height_reduction().unwrap();
     pub fn get_height_reduction(&self) -> Result<u32, VboxError> {
         get_function_result_number!(self.object, GetHeightReduction, u32)
@@ -191,7 +191,7 @@ impl Framebuffer {
     /// let console = session.get_console().unwrap();
     ///
     /// let mut display = console.get_display().unwrap();
-    /// let (framebuffer, _) = display.attach_framebuffer(0).unwrap();
+    /// let framebuffer = display.query_framebuffer(0).unwrap();
     /// let win_id = framebuffer.get_win_id().unwrap();
 
     pub fn get_win_id(&self) -> Result<i64, VboxError> {

@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '*'
+  pull_request:
+    branches:
+      - '*'
 
 jobs:
   build:
@@ -16,14 +19,6 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo
-            ./target
-            ./vbox_raw/target
-          key: v7_1
 
       - name: Build the application
         run: |
