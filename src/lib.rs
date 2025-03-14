@@ -153,6 +153,7 @@ pub use data_stream::DataStream;
 pub use dhcp_server::DHCPServer;
 pub use display::Display;
 pub use display::Resolution;
+pub use display::VideoModeHint;
 pub use errors::vbox_error_type::VboxErrorType;
 pub use errors::VboxError;
 pub use event::Event;
