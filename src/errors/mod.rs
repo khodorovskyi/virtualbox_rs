@@ -95,6 +95,16 @@ impl VboxError {
             msg: "".to_string(),
         }
     }
+    
+    pub fn parse_error(fn_name: &str, msg: &str) -> Self {
+        Self {
+            error_type: VboxErrorType::ConvertStringError,
+            code: 0,
+            fn_name: fn_name.to_string(),
+            msg: msg.to_string(),
+        }
+    }
+    
     pub fn is_null(&self) -> bool {
         self.error_type == VboxErrorType::NullPointerError
     }

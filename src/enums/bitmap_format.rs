@@ -1,7 +1,7 @@
 use std::fmt::Display;
 use vbox_raw::sys_lib as raw;
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
 pub enum BitmapFormat {
     /// Unknown buffer format (the user may not assume any particular format of
     ///         the buffer).

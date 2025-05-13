@@ -1,4 +1,5 @@
 mod implementation;
+mod framebuffer_impl;
 
 use std::collections::BTreeMap;
 use std::fmt::{Debug, Formatter};
@@ -7,6 +8,7 @@ use crate::VboxError;
 use log::{debug, error};
 use vbox_raw::sys_lib::{IFramebuffer};
 use crate::enums::BitmapFormat;
+use crate::framebuffer::framebuffer_impl::IFramebufferImpl;
 
 /// IFramebuffer Interface Reference
 ///
@@ -22,7 +24,24 @@ impl Framebuffer {
     pub(crate) fn new(object: *mut IFramebuffer) -> Self {
         Self { object }
     }
+    pub fn init() -> Self {
+        Self { object: IFramebufferImpl::new() }
+    }
 
+    fn get_object_impl(&self) -> Option<*mut IFramebufferImpl> {
+        if self.object.is_null() {
+            log::error!("The `this` pointer is null.");
+            return None;
+        }
+        unsafe {
+            let impl_ref = &mut *(self.object as *mut IFramebufferImpl);
+            if impl_ref.lpVtbl.is_null() {
+                log::error!("Invalid IFramebufferImpl: lpVtbl is null.");
+                return None;
+            }
+            Some(impl_ref)
+        }
+    }
     fn release(&self) -> Result<i32, VboxError> {
         call_function!(self.object, Release)
     }
@@ -51,6 +70,7 @@ impl std::fmt::Display for Framebuffer {
         map.insert("get_pixel_format", self.get_pixel_format().unwrap_or(BitmapFormat::Opaque).to_string());
         map.insert("get_height_reduction", self.get_height_reduction().unwrap_or(0).to_string());
         map.insert("get_win_id", self.get_win_id().unwrap_or(0).to_string());
+        map.insert("capabilities", format!("{:?}", self.get_capabilities().unwrap_or(vec![])));
 
         if f.alternate() {
             write!(f, "{}", format!("{:#?}", map))

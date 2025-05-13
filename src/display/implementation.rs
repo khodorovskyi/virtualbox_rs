@@ -6,6 +6,7 @@ use crate::utility::macros::macros::{
 use crate::utility::string_to_c_u64_str;
 use crate::{Framebuffer, VboxError};
 use std::slice;
+use log::trace;
 use vbox_raw::sys_lib::{IFramebuffer, PRBool, PRUint8};
 
 impl Display {
@@ -111,11 +112,11 @@ impl Display {
 
         let framebuffer_id_str =
             get_function_result_str!(self.object, AttachFramebuffer, screen_id, framebuffer)?;
-        let mut framebuffer_ids = self
-            .framebuffer_ids
-            .lock()
-            .map_err(|err| VboxError::new(0, "attach_framebuffer", err.to_string(), None))?;
-        framebuffer_ids.insert(framebuffer_id_str, screen_id);
+        // let mut framebuffer_ids = self
+        //     .framebuffer_ids
+        //     .lock()
+        //     .map_err(|err| VboxError::new(0, "attach_framebuffer", err.to_string(), None))?;
+        // framebuffer_ids.insert(framebuffer_id_str, screen_id);
         Ok(framebuffer_id_str)
     }
 
@@ -427,6 +428,7 @@ impl Display {
         )?;
         let screen_data_slice =
             unsafe { slice::from_raw_parts(img_ptr, screen_data_size as usize) };
+        trace!("screen_data_slice {}", screen_data_size);
 
         Ok(screen_data_slice)
     }

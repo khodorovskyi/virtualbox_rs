@@ -180,7 +180,7 @@ pub use vbox_svc_availability_changed_event::VBoxSVCAvailabilityChangedEvent;
 pub use vrde_server_changed_event::VRDEServerChangedEvent;
 pub use vrde_server_info_changed_event::VRDEServerInfoChangedEvent;
 
-mod utility;
+pub(crate) mod utility;
 
 pub(crate) fn create_event_detail(event: &&Event) -> DetailEvent {
     let event_type = event.get_type();

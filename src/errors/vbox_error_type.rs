@@ -7,6 +7,7 @@ pub enum VboxErrorType {
     ErrorInit,
     GetFnError,
     NullPointerError,
+    ParseError,
     ReleaseError,
     ConvertStringError,
     /// This error occurs when the requested method is not supported by the current API version.
