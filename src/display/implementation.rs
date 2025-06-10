@@ -71,52 +71,17 @@ impl Display {
             guest_monitor_status: GuestMonitorStatus::from(guest_monitor_status),
         })
     }
+    
+    //TODO
 
-    /// Sets the graphics update target for a screen.
-    ///
-    /// # Arguments
-    ///
-    /// * `screen_id` - The guest monitor to take screenshot from.
-    /// * `framebuffer` - The framebuffer to attach.
-    ///
-    /// # Returns
-    ///
-    /// Returns &str on success, or a [`VboxError`] on failure.
-    ///
-    ///  # Example
-    ///
-    /// ```no_run
-    ///
-    /// use virtualbox_rs::{Session, VirtualBox};
-    /// use virtualbox_rs::enums::SessionType;
-    ///
-    /// let vbox = VirtualBox::init().unwrap();
-    /// let mut session = Session::init().unwrap();
-    /// let machine = vbox.
-    ///         find_machines("Freebsd_14").unwrap();
-    ///
-    /// machine.lock_machine(&mut session, SessionType::Shared).unwrap();
-    ///
-    /// let console = session.get_console().unwrap();
-    ///
-    /// let mut display = console.get_display().unwrap();
-    /// let framebuffer = display.query_framebuffer(0).unwrap();
-    /// let framebuffer_id_str = display.attach_framebuffer(0, &framebuffer).unwrap();
-
-    pub fn attach_framebuffer(
+    pub (crate) fn attach_framebuffer(
         &mut self,
         screen_id: u32,
-        framebuffer: &Framebuffer
+        framebuffer: *mut IFramebuffer
     ) -> Result<&'static str, VboxError> {
-        let framebuffer: *mut IFramebuffer = framebuffer.object;
 
         let framebuffer_id_str =
             get_function_result_str!(self.object, AttachFramebuffer, screen_id, framebuffer)?;
-        // let mut framebuffer_ids = self
-        //     .framebuffer_ids
-        //     .lock()
-        //     .map_err(|err| VboxError::new(0, "attach_framebuffer", err.to_string(), None))?;
-        // framebuffer_ids.insert(framebuffer_id_str, screen_id);
         Ok(framebuffer_id_str)
     }
 
@@ -165,44 +130,11 @@ impl Display {
             framebuffer_id_ptr
         )
     }
-
-    /// Queries the graphics updates targets for a screen.
-    ///
-    /// # Arguments
-    ///
-    /// * `screen_id` - The guest monitor to take screenshot from.
-    ///
-    /// # Returns
-    ///
-    /// Returns ([`Framebuffer`], &str) on success, or a [`VboxError`] on failure.
-    ///
-    ///  # Example
-    ///
-    /// ```no_run
-    ///
-    /// use virtualbox_rs::{Session, VirtualBox};
-    /// use virtualbox_rs::enums::SessionType;
-    ///
-    /// let vbox = VirtualBox::init().unwrap();
-    /// let mut session = Session::init().unwrap();
-    /// let machine = vbox.
-    ///         find_machines("Freebsd_14").unwrap();
-    ///
-    /// machine.lock_machine(&mut session, SessionType::Shared).unwrap();
-    ///
-    /// let console = session.get_console().unwrap();
-    ///
-    /// let mut display = console.get_display().unwrap();
-    /// display.query_framebuffer(0).unwrap();
-
-    pub fn query_framebuffer(&self, screen_id: u32) -> Result<Framebuffer, VboxError> {
-        let framebuffer = get_function_result_pointer!(
-            self.object,
-            QueryFramebuffer,
-            *mut IFramebuffer,
-            screen_id
-        )?;
-        Ok(Framebuffer::new(framebuffer))
+   
+    pub fn get_framebuffer(&mut self, pixel_format: BitmapFormat, max_fpx: u32) -> Result<Framebuffer, VboxError> {
+        let framebuffer = Framebuffer::new(self.clone(), pixel_format, max_fpx)?;
+        let _ = self.add_ref();
+        Ok(framebuffer)
     }
 
     /// Changes the monitor information reported by a given output of the guest graphics device.
@@ -529,7 +461,7 @@ impl Display {
     /// let display = console.get_display().unwrap();
     /// display.viewport_changed(0, 0, 0, 720, 400).unwrap();
     /// ```
-    pub fn viewport_changed(
+    pub (crate) fn viewport_changed(
         &self,
         screen_id: u32,
         x: u32,

@@ -11,7 +11,7 @@ use vbox_raw::sys_lib::IMouse;
 ///
 /// [https://www.virtualbox.org/sdkref/interface_i_mouse.html](https://www.virtualbox.org/sdkref/interface_i_mouse.html)
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Mouse {
     object: *mut IMouse,
 }
@@ -23,6 +23,9 @@ impl Mouse {
 
     fn release(&self) -> Result<i32, VboxError> {
         call_function!(self.object, Release)
+    }
+    pub(crate) fn add_ref(&self) -> Result<i32, VboxError> {
+        call_function!(self.object, AddRef)
     }
 }
 
@@ -36,6 +39,13 @@ impl Drop for Mouse {
                 error!("Failed drop Mouse. Error: {:?}", err)
             }
         }
+    }
+}
+impl Clone for Mouse {
+    fn clone(&self) -> Self {
+        let clone_object = Self::new(self.object);
+        let _ = clone_object.add_ref();
+        clone_object
     }
 }
 

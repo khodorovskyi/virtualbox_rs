@@ -163,6 +163,8 @@ pub use ext_pack_manager::ExtPackManager;
 #[cfg(is_v_7_1)]
 pub use firmware_settings::FirmwareSettings;
 pub use framebuffer::Framebuffer;
+pub use framebuffer::FramebufferEvent;
+pub use framebuffer::FramebufferImage;
 pub use graphics_adapter::GraphicsAdapter;
 pub use guest::Guest;
 pub use guest::GuestInternalGetStatistics;

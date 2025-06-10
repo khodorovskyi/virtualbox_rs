@@ -17,11 +17,12 @@ v6_1 = ["vbox_raw/v6_1"]
 [dependencies]
 log = "0.4.22"
 vbox_raw = {version = "0.3.1", optional = false }
-image = "0.25.6"
+tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
+turbojpeg = "1.3.3"
 
 [dev-dependencies]
 env_logger = "0.11.3"
-chrono = "0.4.38"
+tokio = {version = "1.45.0", features = ["full"]}
 
 [profile.release]
 lto = true

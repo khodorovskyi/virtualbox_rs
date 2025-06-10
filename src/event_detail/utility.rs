@@ -23,7 +23,7 @@ pub(crate) fn cast_event<T>(object: *mut IEvent, iid_str: &[u8; 37]) -> Result<*
 }
 
 pub fn create_ns_id_from_str(id_str: &[u8; 37]) -> nsID {
-    let id = std::str::from_utf8(id_str).unwrap();
+    let id = std::str::from_utf8(id_str).unwrap_or(&"");
     let id_vec: Vec<&str> = id.split("-").collect();
     let m0 = str_to_u32(id_vec.get(0).unwrap_or(&""));
     let m1 = str_to_u16(id_vec.get(1).unwrap_or(&""));

@@ -11,7 +11,7 @@ use vbox_raw::sys_lib::IEventListener;
 /// **Reference to the official documentation:**
 ///
 /// [https://www.virtualbox.org/sdkref/interface_i_event_listener.html](https://www.virtualbox.org/sdkref/interface_i_event_listener.html)
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct EventListener {
     pub(crate) object: *mut IEventListener,
 }
@@ -23,6 +23,10 @@ impl EventListener {
 
     fn release(&self) -> Result<i32, VboxError> {
         call_function!(self.object, Release)
+    }
+    
+    pub(crate) fn add_ref(&self) -> Result<i32, VboxError> {
+        call_function!(self.object, AddRef)
     }
 }
 
@@ -42,5 +46,13 @@ impl Drop for EventListener {
 impl Display for EventListener {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", format!("{}", self))
+    }
+}
+
+impl Clone for EventListener {
+    fn clone(&self) -> Self {
+        let clone_object = Self::new(self.object);
+        let _ = clone_object.add_ref();
+        clone_object
     }
 }

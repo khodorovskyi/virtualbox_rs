@@ -4400,7 +4400,7 @@ impl Machine {
     ///         find_machines("Freebsd_14").unwrap();
     /// let extra_data = machine.get_extra_data("GUI/LastCloseAction").unwrap();
     pub fn get_extra_data(&self, key: &str) -> Result<&'static str, VboxError> {
-        let key = string_to_c_u64_str(key).unwrap();
+        let key = string_to_c_u64_str(key)?;
         get_function_result_str!(self.object, GetExtraData, key)
     }
 
@@ -4432,8 +4432,8 @@ impl Machine {
     /// let machine_mut = session.get_machine().unwrap();
     /// machine_mut.set_extra_data("key", "value").unwrap()
     pub fn set_extra_data(&self, key: &str, value: &str) -> Result<(), VboxError> {
-        let key = string_to_c_u64_str(key).unwrap();
-        let value = string_to_c_u64_str(value).unwrap();
+        let key = string_to_c_u64_str(key)?;
+        let value = string_to_c_u64_str(value)?;
         get_function_result_unit!(self.object, SetExtraData, key, value)
     }
 

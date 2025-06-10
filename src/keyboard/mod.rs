@@ -11,7 +11,7 @@ use vbox_raw::sys_lib::IKeyboard;
 ///
 /// [https://www.virtualbox.org/sdkref/interface_i_keyboard.html](https://www.virtualbox.org/sdkref/interface_i_keyboard.html)
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Keyboard {
     object: *mut IKeyboard,
 }
@@ -23,6 +23,10 @@ impl Keyboard {
 
     fn release(&self) -> Result<i32, VboxError> {
         call_function!(self.object, Release)
+    }
+    
+    pub(crate) fn add_ref(&self) -> Result<i32, VboxError> {
+        call_function!(self.object, AddRef)
     }
 }
 
@@ -36,6 +40,14 @@ impl Drop for Keyboard {
                 error!("Failed drop Keyboard. Error: {:?}", err)
             }
         }
+    }
+}
+
+impl Clone for Keyboard {
+    fn clone(&self) -> Self {
+        let clone_object = Self::new(self.object);
+        let _ = clone_object.add_ref();
+        clone_object
     }
 }
 
