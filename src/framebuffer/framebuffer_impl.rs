@@ -505,12 +505,14 @@ pub fn send_bitmap_to_channel(
     channel_id: u32,
     pixel_format: BitmapFormat,
 ) -> Result<(), VboxError> {
-    
-    let image = if pixel_format == BitmapFormat::BGRA { 
+
+    let statrt = std::time::Instant::now();
+    let image = if pixel_format == BitmapFormat::BGRA {
         raw_to_bmp(bitmap, width, height)
-    } else { 
+    } else {
         raw_to_jpeg(bitmap, width, height)
     };
+    error!("send_bitmap_to_channel: elapsed: {:?}", statrt.elapsed().as_secs_f64());
     match get_channel(channel_id) {
         None => {
             return Err(VboxError::new(
@@ -608,6 +610,25 @@ fn raw_to_jpeg(bitmap: &[u8], width: u32, height: u32) ->Vec<u8> {
     let jpeg_data = compressor.compress_to_vec(image).unwrap();
     jpeg_data
 }
+
+fn raw_to_jpeg1(bitmap: &[u8], width: u32, height: u32) -> Vec<u8> {
+    use jpeg_encoder::{Encoder, ColorType};
+
+    let mut rgb_data = Vec::with_capacity((width * height * 3) as usize);
+    for px in bitmap.chunks(4) {
+        // BGRA → RGB
+        rgb_data.push(px[2]); // R
+        rgb_data.push(px[1]); // G
+        rgb_data.push(px[0]); // B
+    }
+
+    let mut jpeg_data = Vec::new();
+    let mut encoder = Encoder::new(&mut jpeg_data, 90);
+    encoder.encode(&rgb_data, width as u16, height as u16, ColorType::Rgb).unwrap();
+
+    jpeg_data
+}
+
 fn get_channel(channel_id: u32) -> Option<mpsc::Sender<FramebufferEventInternal>> {
     if let Some(registry) = CHANNEL_REGISTRY.get() {
         let registry = registry.lock().ok()?;
