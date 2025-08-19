@@ -684,7 +684,7 @@ impl VirtualBox {
         )
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Creates a new virtual machine by creating a machine settings file at the given location.
     ///
     /// VirtualBox machine settings files use a custom XML dialect. Starting with VirtualBox 4.0, a ".vbox" extension is recommended, but not enforced, and machine files can be created at arbitrary locations.
@@ -1508,7 +1508,7 @@ impl VirtualBox {
         let network = network.object;
         get_function_result_unit!(self.object, RemoveCloudNetwork, network)
     }
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Check if this VirtualBox installation has a firmware of the given type available, either system-wide or per-user.
     ///
     /// Optionally, this may return a hint where this firmware can be downloaded from.
@@ -1786,7 +1786,7 @@ impl VirtualBox {
         Ok(Progress::new(progress))
     }
 }
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl VirtualBox {
     /// Check if this VirtualBox installation has a firmware of the given type available, either system-wide or per-user.
     ///

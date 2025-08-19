@@ -66,7 +66,7 @@ pub enum CPUPropertyType {
     /// This setting may slow down workloads causing many VM exits, so it is only recommended for situation where there is a real need to be paranoid.
     MDSClearOnVMEntry,
 }
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl Into<u32> for CPUPropertyType {
     fn into(self) -> u32 {
         match self {
@@ -98,7 +98,7 @@ impl Into<u32> for CPUPropertyType {
         }
     }
 }
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl From<u32> for CPUPropertyType {
     fn from(value: u32) -> Self {
         match value {
@@ -134,7 +134,7 @@ impl From<u32> for CPUPropertyType {
         }
     }
 }
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl Into<u32> for CPUPropertyType {
     fn into(self) -> u32 {
         match self {
@@ -166,7 +166,7 @@ impl Into<u32> for CPUPropertyType {
         }
     }
 }
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl From<u32> for CPUPropertyType {
     fn from(value: u32) -> Self {
         match value {

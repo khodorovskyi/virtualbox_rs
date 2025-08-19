@@ -153,6 +153,12 @@ impl VirtualBoxClient {
         {
             return error;
         }
+        
+        if raw_ver == "v7_2".to_string()
+            && (current_major != 7 || current_minor != 2 || BUILD_VER != 72)
+        {
+            return error;
+        }
 
         Ok(())
     }

@@ -33,13 +33,16 @@ fn main() {
  # Supported Platforms
 
 This library has been tested on:
- - FreeBSD 14.0
- - Ubuntu 24.04
+ - FreeBSD
+ - Ubuntu
+ - macOS (Intel)
+ - macOS (Apple Silicon)
+ - Windows 10
 
  # Supported VirtualBox Versions
 
- This library supports VirtualBox versions 6.1, 7.0, and 7.1. By default, the library is built for version 7.1.
- To change the target version, enable the corresponding feature flag: `v7_1`, `v7_0`, or `v6_1`.
+ This library supports VirtualBox versions 6.1, 7.0, 7.1 and 7.2. By default, the library is built for version 7.2.
+ To change the target version, enable the corresponding feature flag:`v7_2`, `v7_1`, `v7_0`, or `v6_1`.
  If multiple versions are specified, the library will be built for the highest version available.
 
  **Important:** Running the library with an incompatible VirtualBox version is likely to result in a `Segmentation fault`.

@@ -38,9 +38,11 @@ pub fn get_version() -> &'static str {
     if cfg!(is_v_6_1) {
         "v6_1"
     }else if cfg!(is_v_7_0) {
-        "v7_0"
-    } else {
+        "v7_0"   
+    }else if cfg!(is_v_7_1) {
         "v7_1"
+    } else {
+        "v7_2"
     }
 }
 

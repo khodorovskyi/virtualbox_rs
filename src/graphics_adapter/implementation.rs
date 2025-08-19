@@ -116,7 +116,7 @@ impl GraphicsAdapter {
         get_function_result_unit!(self.object, SetVRAMSize, vram_size)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// This setting determines whether VirtualBox allows this machine to make use of the 3D graphics support available on the host.
     ///
     /// # Returns
@@ -141,7 +141,7 @@ impl GraphicsAdapter {
         self.is_feature_enabled(GraphicsFeature::Acceleration3D)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// This setting determines whether VirtualBox allows this machine to make use of the 3D graphics support available on the host.
     ///
     /// # Arguments
@@ -173,7 +173,7 @@ impl GraphicsAdapter {
         self.set_feature(GraphicsFeature::Acceleration3D, enabled)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// This setting determines whether VirtualBox allows this machine to make use of the 2D video acceleration support available on the host.
     ///
     /// # Returns
@@ -198,7 +198,7 @@ impl GraphicsAdapter {
         self.is_feature_enabled(GraphicsFeature::Acceleration2DVideo)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// This setting determines whether VirtualBox allows this machine to make use of the 2D video acceleration support available on the host.
     ///
     /// # Arguments
@@ -284,7 +284,7 @@ impl GraphicsAdapter {
     pub fn set_monitor_count(&self, monitor_count: u32) -> Result<(), VboxError> {
         get_function_result_unit!(self.object, SetMonitorCount, monitor_count)
     }
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Sets a graphics controller feature.
     ///
     /// # Arguments
@@ -319,7 +319,7 @@ impl GraphicsAdapter {
         get_function_result_unit!(self.object, SetFeature, feature, enabled)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Returns whether a particular feature is enabled for this adapter or not.
     ///
     /// # Arguments
@@ -352,7 +352,7 @@ impl GraphicsAdapter {
     }
 }
 
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl GraphicsAdapter {
 
     /// This setting determines whether VirtualBox allows this machine to make use of the 3D graphics support available on the host.

@@ -1,7 +1,7 @@
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use log::error;
 use std::fmt::Display;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use vbox_raw::sys_lib as raw;
 
 /// BIOS APIC initialization mode.
@@ -14,7 +14,7 @@ pub enum APICMode {
     X2APIC
 }
 
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl From<u32> for APICMode {
     fn from(value: u32) -> Self {
         match value {
@@ -28,7 +28,7 @@ impl From<u32> for APICMode {
         }
     }
 }
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl Into<u32> for APICMode {
     fn into(self) -> u32 {
         match self {
@@ -40,14 +40,14 @@ impl Into<u32> for APICMode {
 }
 
 
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl From<u32> for APICMode {
     fn from(_value: u32) -> Self {
         APICMode::Disabled
     }
 }
 
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl Into<u32> for APICMode {
     fn into(self) -> u32 {
         0

@@ -453,7 +453,7 @@ impl From<u32> for VBoxEventType {
             }
             raw::VBoxEventType_VBoxEventType_OnGuestFileRead => VBoxEventType::OnGuestFileRead,
             raw::VBoxEventType_VBoxEventType_OnGuestFileWrite => VBoxEventType::OnGuestFileWrite,
-            #[cfg(not(is_v_7_1))]
+            #[cfg(not(is_v_7_1_or_newer))]
             raw::VBoxEventType_VBoxEventType_OnRecordingChanged => {
                 VBoxEventType::OnRecordingChanged
             }
@@ -707,7 +707,7 @@ impl Into<u32> for VBoxEventType {
             }
             VBoxEventType::OnGuestFileRead => raw::VBoxEventType_VBoxEventType_OnGuestFileRead,
             VBoxEventType::OnGuestFileWrite => raw::VBoxEventType_VBoxEventType_OnGuestFileWrite,
-            #[cfg(not(is_v_7_1))]
+            #[cfg(not(is_v_7_1_or_newer))]
             VBoxEventType::OnRecordingChanged => {
                 raw::VBoxEventType_VBoxEventType_OnRecordingChanged
             }

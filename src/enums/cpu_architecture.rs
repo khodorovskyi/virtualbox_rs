@@ -31,9 +31,9 @@ impl From<u32> for CPUArchitecture {
             raw::CPUArchitecture_CPUArchitecture_Any => CPUArchitecture::Any,
             raw::CPUArchitecture_CPUArchitecture_x86 => CPUArchitecture::X86,
             raw::CPUArchitecture_CPUArchitecture_AMD64 => CPUArchitecture::AMD64,
-            #[cfg(is_v_7_1)]
+            #[cfg(is_v_7_1_or_newer)]
             raw::CPUArchitecture_CPUArchitecture_ARMv8_32 => CPUArchitecture::ARMv8_32,
-            #[cfg(is_v_7_1)]
+            #[cfg(is_v_7_1_or_newer)]
             raw::CPUArchitecture_CPUArchitecture_ARMv8_64 => CPUArchitecture::ARMv8_64,
             _ => {
                 error!("Unknown CPUArchitecture. CPUArchitecture: {}", value);
@@ -49,9 +49,9 @@ impl Into<u32> for CPUArchitecture {
         match self {
             CPUArchitecture::X86 => raw::CPUArchitecture_CPUArchitecture_x86,
             CPUArchitecture::AMD64 => raw::CPUArchitecture_CPUArchitecture_AMD64,
-            #[cfg(is_v_7_1)]
+            #[cfg(is_v_7_1_or_newer)]
             CPUArchitecture::ARMv8_32 => raw::CPUArchitecture_CPUArchitecture_ARMv8_32,
-            #[cfg(is_v_7_1)]
+            #[cfg(is_v_7_1_or_newer)]
             CPUArchitecture::ARMv8_64 => raw::CPUArchitecture_CPUArchitecture_ARMv8_64,
             _ => raw::CPUArchitecture_CPUArchitecture_Any
         }
