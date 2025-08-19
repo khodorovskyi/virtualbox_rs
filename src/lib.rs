@@ -53,7 +53,7 @@ mod audio_adapter;
 mod audio_settings;
 mod bandwidth_control;
 mod bandwidth_group;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 mod bios_settings;
 mod cloud_network;
 mod console;
@@ -71,7 +71,7 @@ pub mod event_detail;
 mod event_listener;
 mod event_source;
 mod ext_pack_manager;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 mod firmware_settings;
 mod framebuffer;
 mod graphics_adapter;
@@ -102,9 +102,9 @@ mod not_impl;
 mod nvram_store;
 mod parallel_port;
 mod pci_device_attachment;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 mod platform;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 mod platform_properties;
 mod performance_collector;
 mod progress;
@@ -131,9 +131,9 @@ mod virtualbox_client;
 mod virtualbox_error_info;
 mod vfs_explorer;
 mod vrde_server;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 mod platform_x86;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 mod platform_arm;
 
 pub use appliance::Appliance;
@@ -142,7 +142,7 @@ pub use audio_adapter::AudioAdapter;
 pub use audio_settings::AudioSettings;
 pub use bandwidth_control::BandwidthControl;
 pub use bandwidth_group::BandwidthGroup;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub use bios_settings::BIOSSettings;
 pub use certificate::Certificate;
 pub use cloud_network::CloudNetwork;
@@ -160,7 +160,7 @@ pub use event::Event;
 pub use event_listener::EventListener;
 pub use event_source::EventSource;
 pub use ext_pack_manager::ExtPackManager;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub use firmware_settings::FirmwareSettings;
 pub use framebuffer::Framebuffer;
 pub use graphics_adapter::GraphicsAdapter;
@@ -187,7 +187,7 @@ pub use medium_io::MediumIO;
 pub use mouse::Mouse;
 pub use nat_network::NATNetwork;
 pub use network_adapter::NetworkAdapter;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub use not_impl::bios_settings::BIOSSettings;
 #[cfg(is_v_6_1)]
 pub use not_impl::audio_settings_not_impl::AudioSettings;
@@ -195,7 +195,7 @@ pub use not_impl::audio_settings_not_impl::AudioSettings;
 pub use not_impl::cpu_profile::CPUProfile;
 #[cfg(is_v_6_1)]
 pub use not_impl::guest_debug_control_not_impl::GuestDebugControl;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub use not_impl::firmware_settings::FirmwareSettings;
 #[cfg(is_v_6_1)]
 pub use not_impl::host_audio_device::HostAudioDevice;
@@ -210,11 +210,11 @@ pub use not_impl::update_agent::UpdateAgent;
 #[cfg(not(is_v_6_1))]
 pub use nvram_store::NvramStore;
 pub use parallel_port::ParallelPort;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub use platform::Platform;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub use not_impl::platform::Platform;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub use platform_properties::PlatformProperties;
 pub use pci_device_attachment::PCIDeviceAttachment;
 pub use performance_collector::PerformanceCollector;
@@ -241,13 +241,13 @@ pub use virtualbox_client::VirtualBoxClient;
 pub use virtualbox_error_info::VirtualBoxErrorInfo;
 pub use vfs_explorer::VFSExplorer;
 pub use vrde_server::VRDEServer;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub use platform_x86::PlatformX86;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub use not_impl::platform_x86::PlatformX86;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub use platform_arm::PlatformARM;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub use not_impl::platform_arm::PlatformARM;
 
 #[allow(dead_code)]

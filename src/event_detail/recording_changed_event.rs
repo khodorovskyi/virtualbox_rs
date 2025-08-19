@@ -1,14 +1,14 @@
 use crate::event_detail::DetailEvent;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use crate::event_detail::utility::cast_event;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use crate::utility::macros::macros::get_function_result_bool;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use crate::VboxError;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use log::error;
 use std::fmt::Display;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use vbox_raw::sys_lib::{IRecordingChangedEvent, IRECORDINGCHANGEDEVENT_IID_STR};
 use vbox_raw::sys_lib::IEvent;
 
@@ -18,7 +18,7 @@ pub struct RecordingChangedEvent {
     pub midl_does_not_like_empty_interfaces: bool,
 }
 
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl RecordingChangedEvent {
     pub fn new(object: *mut IEvent) -> DetailEvent {
         match Self::create(object) {
@@ -45,7 +45,7 @@ impl RecordingChangedEvent {
     }
 }
 
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl RecordingChangedEvent {
     pub fn new(_object: *mut IEvent) -> DetailEvent {
         DetailEvent::Null

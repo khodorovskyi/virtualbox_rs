@@ -1,6 +1,6 @@
 use crate::enums::{CPUArchitecture, FrontEndName};
 use crate::system_properties::SystemProperties;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use crate::utility::macros::macros::get_function_result_number;
 use crate::utility::macros::macros::{get_function_result_pointer_vec};
 use crate::utility::macros::macros::{get_function_result_str, get_function_result_unit};
@@ -11,15 +11,15 @@ use crate::{Machine, VirtualBox};
 #[cfg(not(is_v_6_1))]
 use vbox_raw::sys_lib::ICPUProfile;
 use vbox_raw::sys_lib::{IMediumFormat};
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use vbox_raw::sys_lib::{ IPlatformProperties};
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use crate::{PlatformProperties};
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use crate::utility::macros::macros::{get_function_result_pointer};
 
 impl SystemProperties {
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Platform properties of the VirtualBox installation.
     ///
     /// # Returns
@@ -41,7 +41,7 @@ impl SystemProperties {
         Ok(PlatformProperties::new(platform_properties))
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Maximum device position in the boot order.
     ///
     /// # Returns
@@ -62,7 +62,7 @@ impl SystemProperties {
         PlatformProperties::init()?.get_max_boot_position()
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Maximum number of serial ports associated with every [`Machine`] instance.
     ///
     /// # Returns
@@ -118,7 +118,7 @@ impl SystemProperties {
             .collect())
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Maximum number of parallel ports associated with every [`Machine`] instance.
     ///
     /// # Returns
@@ -256,7 +256,7 @@ impl SystemProperties {
             .collect())
     }
 }
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl SystemProperties {
     /// Maximum device position in the boot order.
     ///

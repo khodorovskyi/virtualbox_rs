@@ -1,6 +1,6 @@
 [package]
 name = "virtualbox_rs"
-version = "0.3.2"
+version = "0.4.0"
 edition = "2021"
 authors = ["Mykola Khodorovskyi <mykola@khodorovskyi.eu>"]
 license = "BSD-3-Clause"
@@ -10,13 +10,14 @@ repository = "https://github.com/khodorovskyi/virtualbox_rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [features]
+v7_2 = ["vbox_raw/v7_2"]
 v7_1 = ["vbox_raw/v7_1"]
 v7_0 = ["vbox_raw/v7_0"]
 v6_1 = ["vbox_raw/v6_1"]
 
 [dependencies]
 log = "0.4.22"
-vbox_raw = {version = "0.3.1", optional = false }
+vbox_raw = {version = "0.4.1", optional = false }
 
 [dev-dependencies]
 env_logger = "0.11.3"

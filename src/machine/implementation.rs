@@ -31,11 +31,11 @@ use log::debug;
 use std::slice;
 #[cfg(is_v_6_1)]
 use vbox_raw::sys_lib::IAudioAdapter;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 use vbox_raw::sys_lib::IBIOSSettings;
 #[cfg(not(is_v_6_1))]
 use vbox_raw::sys_lib::{IAudioSettings, IGuestDebugControl, INvramStore, ITrustedPlatformModule};
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use vbox_raw::sys_lib::{IFirmwareSettings, IPlatform};
 
 use vbox_raw::sys_lib::{
@@ -903,7 +903,7 @@ impl Machine {
         Ok(GraphicsAdapter::new(graphics_adapter))
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Platform object for a virtual machine.
     ///
     /// # Returns
@@ -926,7 +926,7 @@ impl Machine {
         Ok(Platform::new(platform))
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Object containing all firmware settings.
     ///
     /// # Returns
@@ -950,7 +950,7 @@ impl Machine {
         Ok(FirmwareSettings::new(firmware_settings))
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Placeholder Method
     ///
     /// This method serves as a placeholder for versions of the API where the actual method is not available.
@@ -991,7 +991,7 @@ impl Machine {
         )?;
         Ok(RecordingSettings::new(recording_settings))
     }
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Type of firmware (such as legacy BIOS or EFI), used for initial bootstrap in this VM.
     ///
     /// # Returns
@@ -1013,7 +1013,7 @@ impl Machine {
         self.get_firmware_settings()?.get_firmware_type()
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Type of firmware (such as legacy BIOS or EFI), used for initial bootstrap in this VM.
     ///
     /// # Arguments
@@ -1165,7 +1165,7 @@ impl Machine {
         get_function_result_unit!(self.object, SetKeyboardHIDType, keyboard_hid_type)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// This attribute controls if High Precision Event Timer (HPET) is enabled in this VM.
     ///
     /// Use this property if you want to provide guests with additional time source, or if guest requires HPET to function correctly. Default is false.
@@ -1188,7 +1188,7 @@ impl Machine {
         self.get_platform()?.get_x86()?.get_hpet_enabled()
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// This attribute controls if High Precision Event Timer (HPET) is enabled in this VM.
     ///
     /// Use this property if you want to provide guests with additional time source, or if guest requires HPET to function correctly. Default is false.
@@ -1220,7 +1220,7 @@ impl Machine {
         self.get_platform()?.get_x86()?.set_hpet_enabled(enabled)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Chipset type used in this VM.
     ///
     /// # Returns
@@ -1242,7 +1242,7 @@ impl Machine {
         self.get_platform()?.get_chipset_type()
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Chipset type used in this VM.
     ///
     /// # Arguments
@@ -2241,7 +2241,7 @@ impl Machine {
         get_function_result_unit!(self.object, SetParavirtProvider, paravirt_provider)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// When set to true, the RTC device of the virtual machine will run in UTC time, otherwise in local time.
     ///
     /// Especially Unix guests prefer the time in UTC.
@@ -2264,7 +2264,7 @@ impl Machine {
         self.get_platform()?.get_rtc_use_utc()
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// When set to true, the RTC device of the virtual machine will run in UTC time, otherwise in local time.
     ///
     /// Especially Unix guests prefer the time in UTC.
@@ -4437,7 +4437,7 @@ impl Machine {
         get_function_result_unit!(self.object, SetExtraData, key, value)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Returns the virtual CPU boolean value of the specified property.
     ///
     /// # Arguments
@@ -4463,7 +4463,7 @@ impl Machine {
         self.get_platform()?.get_x86()?.get_cpu_property(property)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     ///  Sets the virtual CPU boolean value of the specified property.
     ///
     /// # Arguments
@@ -4505,7 +4505,7 @@ impl Machine {
     // TODO RemoveCPUIDLeaf
     // TODO RemoveAllCPUIDLeaves
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// Returns the value of the specified hardware virtualization boolean property.
     ///
     /// # Arguments
@@ -4536,7 +4536,7 @@ impl Machine {
             .get_hw_virt_ex_property(property)
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     ///  Sets a new value for the specified hardware virtualization boolean property.
     ///
     /// # Arguments
@@ -6228,7 +6228,7 @@ impl Machine {
         Ok(NvramStore::new(store))
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// IOMMU type used in this VM.
     ///
     /// # Returns
@@ -6250,7 +6250,7 @@ impl Machine {
         self.get_platform()?.get_iommu_type()
     }
 
-    #[cfg(is_v_7_1)]
+    #[cfg(is_v_7_1_or_newer)]
     /// IOMMU type used in this VM.
     ///
     /// # Arguments
@@ -6755,7 +6755,7 @@ impl Machine {
         get_function_result_unit!(self.object, SetIommuType, iommu_type)
     }
 }
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl Machine {
     /// Object containing all BIOS settings.
     ///

@@ -1,7 +1,7 @@
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use log::error;
 use std::fmt::Display;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 use vbox_raw::sys_lib as raw;
 
 /// Firmware boot menu mode.
@@ -12,7 +12,7 @@ pub enum FirmwareBootMenuMode {
     MessageAndMenu
 }
 
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl From<u32> for FirmwareBootMenuMode {
     fn from(value: u32) -> Self {
         match value {
@@ -26,7 +26,7 @@ impl From<u32> for FirmwareBootMenuMode {
         }
     }
 }
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 impl Into<u32> for FirmwareBootMenuMode {
     fn into(self) -> u32 {
         match self {
@@ -38,14 +38,14 @@ impl Into<u32> for FirmwareBootMenuMode {
 }
 
 
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl From<u32> for FirmwareBootMenuMode {
     fn from(_value: u32) -> Self {
         FirmwareBootMenuMode::Disabled
     }
 }
 
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 impl Into<u32> for FirmwareBootMenuMode {
     fn into(self) -> u32 {
         0

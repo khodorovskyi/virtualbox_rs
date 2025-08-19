@@ -14,13 +14,13 @@ pub mod nvram_store;
 pub mod trusted_platform_module;
 #[cfg(is_v_6_1)]
 pub mod update_agent;
-#[cfg(is_v_7_1)]
+#[cfg(is_v_7_1_or_newer)]
 pub mod bios_settings;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub mod firmware_settings;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub mod platform_x86;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub mod platform_arm;
-#[cfg(not(is_v_7_1))]
+#[cfg(not(is_v_7_1_or_newer))]
 pub mod platform;
