@@ -22,6 +22,7 @@ fn main() {
         println!("cargo:rustc-cfg=is_v_6_1");
         print_6_1_or_newer();
     } else {
+        println!("cargo:rustc-cfg=is_v_7_2");
         print_7_2_or_newer();
     }
 }
