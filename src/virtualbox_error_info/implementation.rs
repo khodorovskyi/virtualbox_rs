@@ -1,7 +1,6 @@
 use crate::utility::macros::macros::get_function_result_str;
 use crate::virtualbox_error_info::VirtualBoxErrorInfo;
 use crate::VboxError;
-use log::debug;
 
 impl VirtualBoxErrorInfo {
     /// Text description of the error.

@@ -5,7 +5,6 @@ use crate::utility::macros::macros::{
     get_function_result_pointer, get_function_result_pointer_vec, get_function_result_unit,
 };
 use crate::{EventSource, Guest, Keyboard, Mouse, PCIDeviceAttachment, VboxError};
-use log::debug;
 use vbox_raw::sys_lib::{
     IDisplay, IEventSource, IGuest, IKeyboard, IMouse, IPCIDeviceAttachment, IProgress,
 };

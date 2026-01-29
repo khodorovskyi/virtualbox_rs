@@ -6,7 +6,6 @@ use crate::utility::macros::macros::{
 };
 use crate::virtualbox_error_info::VirtualBoxErrorInfo;
 use crate::VboxError;
-use log::debug;
 use vbox_raw::sys_lib::{IEventSource, IVirtualBoxErrorInfo};
 
 impl Progress {
