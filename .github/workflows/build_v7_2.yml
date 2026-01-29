@@ -1,0 +1,31 @@
+name: Build and test v7_2
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Build the application
+        run: |
+          cargo build --features v7_2  --release 
+
+      - name: Test the application
+        run: |
+          cargo test --features v7_2
+      - name: Test doc
+        run: |
+          cargo doc --features v7_2
