@@ -37,7 +37,6 @@ This library has been tested on:
  - Ubuntu
  - macOS (Intel)
  - macOS (Apple Silicon)
- - Windows 10
 
  # Supported VirtualBox Versions
 
