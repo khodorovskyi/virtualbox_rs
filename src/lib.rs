@@ -70,6 +70,7 @@ mod event;
 pub mod event_detail;
 mod event_listener;
 mod event_source;
+mod ext_pack;
 mod ext_pack_manager;
 #[cfg(is_v_7_1_or_newer)]
 mod firmware_settings;
@@ -159,6 +160,7 @@ pub use errors::VboxError;
 pub use event::Event;
 pub use event_listener::EventListener;
 pub use event_source::EventSource;
+pub use ext_pack::ExtPack;
 pub use ext_pack_manager::ExtPackManager;
 #[cfg(is_v_7_1_or_newer)]
 pub use firmware_settings::FirmwareSettings;
@@ -236,6 +238,7 @@ pub use usb_controller::USBController;
 pub use usb_device::USBDevice;
 pub use usb_device_filters::USBDeviceFilters;
 pub use virtual_system_description::VirtualSystemDescription;
+pub use virtual_system_description::VirtualSystemDescriptionInfo;
 pub use virtualbox::VirtualBox;
 pub use virtualbox_client::VirtualBoxClient;
 pub use virtualbox_error_info::VirtualBoxErrorInfo;

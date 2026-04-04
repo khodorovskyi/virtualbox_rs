@@ -2,21 +2,21 @@ use crate::enums::{CPUArchitecture, FrontEndName};
 use crate::system_properties::SystemProperties;
 #[cfg(not(is_v_7_1_or_newer))]
 use crate::utility::macros::macros::get_function_result_number;
-use crate::utility::macros::macros::{get_function_result_pointer_vec};
+#[cfg(is_v_7_1_or_newer)]
+use crate::utility::macros::macros::get_function_result_pointer;
+use crate::utility::macros::macros::get_function_result_pointer_vec;
 use crate::utility::macros::macros::{get_function_result_str, get_function_result_unit};
 use crate::utility::string_to_c_u64_str;
+#[cfg(is_v_7_1_or_newer)]
+use crate::PlatformProperties;
 use crate::{CPUProfile, MediumFormat, VboxError};
 #[cfg(doc)]
 use crate::{Machine, VirtualBox};
 #[cfg(not(is_v_6_1))]
 use vbox_raw::sys_lib::ICPUProfile;
-use vbox_raw::sys_lib::{IMediumFormat};
+use vbox_raw::sys_lib::IMediumFormat;
 #[cfg(is_v_7_1_or_newer)]
-use vbox_raw::sys_lib::{ IPlatformProperties};
-#[cfg(is_v_7_1_or_newer)]
-use crate::{PlatformProperties};
-#[cfg(is_v_7_1_or_newer)]
-use crate::utility::macros::macros::{get_function_result_pointer};
+use vbox_raw::sys_lib::IPlatformProperties;
 
 impl SystemProperties {
     #[cfg(is_v_7_1_or_newer)]
@@ -37,7 +37,8 @@ impl SystemProperties {
     /// let platform_properties = system_properties.get_platform_properties().unwrap();
     ///
     pub fn get_platform_properties(&self) -> Result<PlatformProperties, VboxError> {
-        let platform_properties = get_function_result_pointer!(self.object, GetPlatform, *mut IPlatformProperties)?;
+        let platform_properties =
+            get_function_result_pointer!(self.object, GetPlatform, *mut IPlatformProperties)?;
         Ok(PlatformProperties::new(platform_properties))
     }
 
@@ -254,6 +255,101 @@ impl SystemProperties {
             .iter()
             .map(|object| CPUProfile::new(object.clone()))
             .collect())
+    }
+
+    /// Returns the default VRDE extension pack name.
+    ///
+    /// # Returns
+    ///
+    /// Returns &str on success, or a [`VboxError`] on failure.
+    ///
+    ///  # Example
+    ///
+    /// ```no_run
+    ///
+    /// use virtualbox_rs::SystemProperties;
+    ///
+    /// let system_properties = SystemProperties::init().unwrap();
+    ///
+    /// let name = system_properties.get_default_vrde_ext_pack().unwrap();
+    pub fn get_default_vrde_ext_pack(
+        &self,
+    ) -> Result<&'static str, VboxError> {
+        get_function_result_str!(self.object, GetDefaultVRDEExtPack)
+    }
+
+    /// Sets the default VRDE extension pack name.
+    ///
+    ///  # Arguments
+    /// * `default_vrde_ext_pack` - &str - The name of the default VRDE extension pack.
+    ///
+    /// # Returns
+    ///
+    /// Returns () success, or a [`VboxError`] on failure.
+    ///
+    ///  # Example
+    ///
+    /// ```no_run
+    ///
+    /// use virtualbox_rs::SystemProperties;
+    ///
+    /// let system_properties = SystemProperties::init().unwrap();
+    ///
+    /// system_properties.set_default_vrde_ext_pack("VNC").unwrap();
+    pub fn set_default_vrde_ext_pack(
+        &self,
+        default_vrde_ext_pack: &str,
+    ) -> Result<(), VboxError> {
+        let default_vrde_ext_pack_ptr = string_to_c_u64_str(default_vrde_ext_pack)?;
+        get_function_result_unit!(self.object, SetDefaultVRDEExtPack, default_vrde_ext_pack_ptr)
+    }
+
+
+    /// Returns the default VRDE authentication library name.
+    ///
+    /// # Returns
+    ///
+    /// Returns &str on success, or a [`VboxError`] on failure.
+    ///
+    ///  # Example
+    ///
+    /// ```no_run
+    ///
+    /// use virtualbox_rs::SystemProperties;
+    ///
+    /// let system_properties = SystemProperties::init().unwrap();
+    ///
+    /// let name = system_properties.get_vrde_auth_library();
+    pub fn get_vrde_auth_library(
+        &self,
+    ) -> Result<&'static str, VboxError> {
+        get_function_result_str!(self.object, GetVRDEAuthLibrary)
+    }
+
+    /// Sets the default VRDE authentication library name.
+    ///
+    ///  # Arguments
+    /// * `vrdeauth_library` - &str - The name of the default VRDE authentication library.
+    ///
+    /// # Returns
+    ///
+    /// Returns () success, or a [`VboxError`] on failure.
+    ///
+    ///  # Example
+    ///
+    /// ```no_run
+    ///
+    /// use virtualbox_rs::SystemProperties;
+    ///
+    /// let system_properties = SystemProperties::init().unwrap();
+    ///
+    /// system_properties.set_vrdeauth_library("VBoxAuth").unwrap();
+    pub fn set_vrdeauth_library(
+        &self,
+        vrdeauth_library: &str,
+    ) -> Result<(), VboxError> {
+        let vrdeauth_library_ptr = string_to_c_u64_str(vrdeauth_library)?;
+        get_function_result_unit!(self.object, SetVRDEAuthLibrary, vrdeauth_library_ptr)
     }
 }
 #[cfg(not(is_v_7_1_or_newer))]
